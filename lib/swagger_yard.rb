@@ -59,7 +59,7 @@ module SwaggerYard
     def generate!(controller_path)
       register_custom_yard_tags!
       @controller_path = controller_path
-      parse_controllers
+      cache.fetch("listing_index") { parse_controllers }
     end
 
     def get_api(resource_name)
