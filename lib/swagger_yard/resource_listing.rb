@@ -26,7 +26,7 @@ module SwaggerYard
           "path"        => api_declaration.resource_path,
           "description" => api_declaration.description
         }
-      end
+      end.sort_by { |hsh| hsh["path"] }
     end
   end
 end
