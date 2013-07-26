@@ -199,8 +199,11 @@
       this.api = api;
       this.path = this.api.resourcePath != null ? this.api.resourcePath : resourceObj.path;
       this.description = resourceObj.description;
-      parts = this.path.split("/");
-      this.name = parts[parts.length - 1].replace('.{format}', '');
+// SYNCTV  
+      // parts = this.path.split("/");   
+      // this.name = parts[parts.length - 1].replace('.{format}', '');
+      this.name = this.path.substring(1);
+// SYNCTV
       this.basePath = this.api.basePath;
       this.operations = {};
       this.operationsArray = [];

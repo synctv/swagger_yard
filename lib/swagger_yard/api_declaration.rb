@@ -25,8 +25,7 @@ module SwaggerYard
     end
 
     def resource_name
-      raise("resource_path is not set correctly: #{@resource_path}") if @resource_path.match(/\/(.*)$/).nil?
-      @resource_path.match(/\/(.*)$/)[1]
+      @resource_path
     end
 
     def to_h

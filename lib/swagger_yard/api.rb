@@ -20,7 +20,7 @@ module SwaggerYard
         when "summary"
           @summary = value
         when "notes"
-          @notes = value
+          @notes = value.gsub("\n", "<br\>")
         end
       end
 

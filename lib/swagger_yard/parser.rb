@@ -13,7 +13,7 @@ module SwaggerYard
     def run(yard_objects)
       api_declaration = ApiDeclaration.new
       retain_api = true
-
+      
       yard_objects.each do |yard_object|
         case yard_object.type
         when :class
