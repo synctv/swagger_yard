@@ -76,7 +76,7 @@ Here is a example of how to use SwaggerYard
     end
 
 
-![Web UI](https://github.com/synctv/swagger_yard/example/web-ui.png)
+![Web UI](https://raw.github.com/synctv/swagger_yard/master/example/web-ui.png)
 
 
 Generators
