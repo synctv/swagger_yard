@@ -12,8 +12,9 @@ Gem::Specification.new do |s|
   s.homepage    = "http://www.synctv.com"
   s.summary     = %q{SwaggerYard API doc through YARD}
   s.description = %q{SwaggerYard API doc gem that uses YARD to parse the docs for a REST rails API}
+  s.licenses    = ['MIT']
 
-  s.files = Dir["{app,config,public,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,public,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.8"
