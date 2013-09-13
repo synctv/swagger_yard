@@ -4,14 +4,15 @@ SwaggerYard
 The SwaggerYard gem is a Rails Engine designed to parse your Yardocs API controller.
 It'll create a Swagger-UI complaint JSON to be served out through where you mount SwaggerYard. 
 You can mount this to the Rails app serving the REST API or you could mount it as a separate Rails app.
-Parsing of the Yardocs happens during the server startup and the data will be subsequently cached to the Rails cache you have defined. If you API is large expect a slow server start up time.
+Parsing of the Yardocs happens during the server startup and the data will be subsequently cached to the Rails cache you have defined. 
+If your API is large expect a slow server start up time.
 
 Installation
 -----------------
   
 Put SwaggerYard in your Gemfile:
 
-    gem install swagger_yard
+    gem 'swagger_yard'
 
 Install the gem with Bunder:
 
