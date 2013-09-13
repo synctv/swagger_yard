@@ -15,9 +15,6 @@ module SwaggerYard
     end
 
     def doc
-      @access_id     = SwaggerYard.access_id
-      @access_secret = SwaggerYard.access_secret
-      @discovery_url = "#{request.protocol}#{request.host_with_port}/swagger/api"
       render :doc
     end
   end

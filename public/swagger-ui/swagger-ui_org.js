@@ -1631,94 +1631,9 @@ templates['status_code'] = template(function (Handlebars,depth0,helpers,partials
         log("bodyParam = " + bodyParam);
         headerParams = null;
 
-        // SYNCTV specific changes
-        // This is mainly for signatures changes we need to make for the requesting url 
-
-        invocationUrl = this.model.supportHeaderParams() ? (headerParams = this.model.getHeaderParams(map), this.model.urlify(map, false)) : this.model.urlify(map, true);
-
-        decodeServerDate = function(string) {
-          if (string === null || string === undefined || string === '') {
-            return null;
-          } else if (!( typeof string == 'string')) {
-            throw "This function takes a String.";
-          } else {
-            var split = string.split(/[-T:Z]/);
-
-            var d = new Date();
-            d.setUTCFullYear(parseInt(split[0], 10));
-            d.setUTCMonth(parseInt(split[1], 10) - 1);
-            d.setUTCDate(parseInt(split[2], 10));
-            d.setUTCHours(parseInt(split[3], 10));
-            d.setUTCMinutes(parseInt(split[4], 10));
-            d.setUTCSeconds(parseInt(split[5], 10));
-            //Server dates are only precise to the second. It's IMPORTANT to set
-            //milliseconds to 0 to avoid false precision; otherwise semantically
-            //identical dates may compare as unequal because they have different
-            //trash in this field!
-            d.setUTCMilliseconds(0);
-            return d;
-          }
-        }
-
-        encodeParamComponent = function(component) {
-          var encode;
-          if ( component instanceof Date) {
-            var encode = Util.encodeServerDate(component);
-
-            return encodeURIComponent(encode);
-          } else {
-            return encodeURIComponent(component.toString());
-          }
-        }
-
-        encodeSigComponent = function(component) {
-          var encode = encodeParamComponent(component)
-
-          //This is a specific substitution just for the sig algorithm's purpose.
-          encode = encode.replace(/\%20/g, "+");
-
-          //These are things that the less specific encoding method used on server
-          //side will escape, but are omitted from encodeURIComponent because
-          //they're legal for its specific purpose.
-          encode = encode.replace(/~/g, "%7E");
-          encode = encode.replace(/!/g, "%21");
-          encode = encode.replace(/\*/g, "%2A");
-          encode = encode.replace(/\(/g, "%28");
-          encode = encode.replace(/\)/g, "%29");
-          encode = encode.replace(/'/g, "%27");
-          return encode;
-        }
-
-        var auth_hash = this.model.auth_hash();
-        map["access_id"] = auth_hash["id"];
-
-        var query_params = [];
-        for (var key in map) {
-          var encodeKey = encodeSigComponent(key);
-          if (map[key] instanceof Array) {
-            for (var i = 0; i < map[key].length; i++) {
-              query_params.push(encodeKey + "%5B%5D=" + encodeSigComponent(map[key][i]));
-            }
-          } else {
-            query_params.push(encodeKey + "=" + encodeSigComponent(map[key]));
-          }
-        }
-
-        query_params.sort();
-        log('query_params ' + query_params);
-        var param_string = query_params.join("&");
-        param_string += auth_hash["secret"];
-        var signature = MD5.hash(param_string);
-        log('signature ' + signature);
-
-        if(Object.keys(map).length == 1) {
-          invocationUrl += "?"
-        } else {
-          invocationUrl += "&"
-        }
-
-        invocationUrl += ("access_id=" + auth_hash["id"] + "&signature=" + signature);
-        // SYNCTV END
+        // SwaggerYard changes
+        // Tip: You can modify invocationUrl here to be pass additional parameters such as a signature or a SHA value, for 
+        // when you make a request to your API thru swagger-ui.
 
         log('submitting ' + invocationUrl);
         $(".request_url", $(this.el)).html("<pre>" + invocationUrl + "</pre>");

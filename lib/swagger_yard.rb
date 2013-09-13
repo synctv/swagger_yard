@@ -18,7 +18,7 @@ module SwaggerYard
       yield self
     end
 
-    attr_accessor :doc_base_path, :api_base_path, :api_path, :access_id, :access_secret
+    attr_accessor :doc_base_path, :api_base_path, :api_path
     attr_writer :swagger_version, :api_version, :cache_store, :cache_prefix, :enable, :reload
 
     def cache_store

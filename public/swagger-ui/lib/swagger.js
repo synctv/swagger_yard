@@ -199,11 +199,12 @@
       this.api = api;
       this.path = this.api.resourcePath != null ? this.api.resourcePath : resourceObj.path;
       this.description = resourceObj.description;
-// SYNCTV  
+      // SwaggerYard changes
+      // Do not parse out .{format} from path, swagger-ui treats it the format differently.
       // parts = this.path.split("/");   
       // this.name = parts[parts.length - 1].replace('.{format}', '');
       this.name = this.path.substring(1);
-// SYNCTV
+      // End of changes
       this.basePath = this.api.basePath;
       this.operations = {};
       this.operationsArray = [];

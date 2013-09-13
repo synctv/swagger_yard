@@ -20,10 +20,9 @@
     <script type="text/javascript">
 	$(function () {
 	    window.swaggerUi = new SwaggerUi({
-                discoveryUrl: "<%= @discovery_url %>",
+                discoveryUrl: location.protocol + "//" + location.host + "/swagger/api",
                 dom_id:"swagger-ui-container",
                 supportHeaderParams: true,
-                auth_hash: {id: "<%= @access_id %>", secret: "<%= @access_secret %>"},
                 supportedSubmitMethods: ['get', 'post', 'put'],
                 onComplete: function(swaggerApi, swaggerUi){
                 	if(console) {
