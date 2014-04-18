@@ -1,15 +1,18 @@
 require 'simplecov'
 SimpleCov.start
 
+ENV["RAILS_ENV"] = "development"
+
 require 'bundler/setup'
 
 require 'rspec'
-require 'mocha'
+require 'mocha/api'
 require 'bourne'
 
-require 'rails' # for the engine
+# Load Rails, which loads our swagger_yard
+require File.expand_path('../fixtures/dummy/config/application.rb', __FILE__)
 
-require File.expand_path('../../lib/swagger_yard', __FILE__)
+# require File.expand_path('../../lib/swagger_yard', __FILE__)
 
 # Dir["./spec/support/**/*.rb"].each {|f| require f}
 

@@ -1,4 +1,5 @@
 require "yard"
+require "json"
 require "swagger_yard/engine"
 require "swagger_yard/cache"
 require "swagger_yard/parser"
