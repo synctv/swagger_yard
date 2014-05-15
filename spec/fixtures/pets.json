@@ -1,1 +1,1 @@
-{"apiVersion":"0.1","swaggerVersion":"1.1","basePath":null,"apis":[{"path":"/pets","description":"This document describes the API for interacting with Pet resources"}]}
+{"apiVersion":"1.0","swaggerVersion":"1.1","basePath":"http://localhost:3000/swagger/api","apis":[{"path":"/pets","description":"This document describes the API for interacting with Pet resources"}]}
