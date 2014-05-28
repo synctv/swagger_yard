@@ -10,13 +10,13 @@ module SwaggerYard
     end
 
     def server?
-      [:thin, :unicorn].include?(discovered_dispatcher)
+      [:thin, :unicorn, :puma].include?(discovered_dispatcher)
     end
 
   private
 
     def discover_dispatcher
-      dispatchers = %w[sidekiq thin unicorn]
+      dispatchers = %w[sidekiq thin unicorn puma]
       while dispatchers.any? && @discovered_dispatcher.nil?
         send 'check_for_' + (dispatchers.shift)
       end
@@ -45,6 +45,12 @@ module SwaggerYard
     def check_for_thin
       if defined?(::Thin) && defined?(::Thin::VERSION)
         @discovered_dispatcher = :thin
+      end
+    end
+
+    def check_for_puma
+      if defined?(::Puma) && defined?(::Puma::Const::VERSION)
+        @discovered_dispatcher = :puma
       end
     end
   end

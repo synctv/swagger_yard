@@ -3,6 +3,7 @@ require "json"
 require "swagger_yard/engine"
 require "swagger_yard/cache"
 require "swagger_yard/parser"
+require "swagger_yard/model"
 
 module SwaggerYard
   class << self
@@ -50,17 +51,30 @@ module SwaggerYard
       @resource_to_file_path ||= {}
     end
 
-    def parse_file(file_path)
+    #
+    # Use YARD to parse object tags from a file
+    # 
+    # @param file_path [string] The complete path to file
+    # @return [YARD] objects representing class/methods and tags from the file
+    # 
+    def yard_objects_from_file(file_path)
       ::YARD.parse(file_path)
       yard_objects = ::YARD::Registry.all
       ::YARD::Registry.clear
-      @parser.run(yard_objects)
+      yard_objects
     end
 
-    def generate!(controller_path)
+    def parse_file(file_path)
+      @parser.run(yard_objects_from_file(file_path))
+    end
+
+    def generate!(controller_path, model_path = nil)
       register_custom_yard_tags!
+
+      @model_path = model_path
       @controller_path = controller_path
-      cache.fetch("listing_index") { parse_controllers }
+
+      get_listing
     end
 
     def get_api(resource_name)
@@ -68,6 +82,14 @@ module SwaggerYard
         parse_file(resource_to_file_path[resource_name]).to_h
       else
         cache.fetch(resource_name) { parse_file(resource_to_file_path[resource_name]).to_h }
+      end
+    end
+
+    def models
+      if reload
+        parse_models
+      else
+        cache.fetch("models") { parse_models }
       end
     end
 
@@ -92,10 +114,20 @@ module SwaggerYard
       ::YARD::Tags::Library.define_tag("Implementation notes", :notes)
       ::YARD::Tags::Library.define_tag("Response class", :response_class)
       ::YARD::Tags::Library.define_tag("Api Summary", :summary)
+      ::YARD::Tags::Library.define_tag("Model resource", :model)
+      ::YARD::Tags::Library.define_tag("Model property", :property, :with_types_and_name)
     end
 
     def cache
       @cache ||= Cache.new(cache_store, cache_prefix)
+    end
+
+    def parse_models
+      return [] unless @model_path
+
+      Dir[@model_path].map do |file_path|
+        Model.from_yard_objects(yard_objects_from_file(file_path))
+      end
     end
 
     def parse_controllers
