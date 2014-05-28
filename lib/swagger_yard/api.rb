@@ -1,11 +1,12 @@
 module SwaggerYard
   class Api
-    attr_reader :nickname
+    attr_reader :nickname, :model_names
     attr_accessor :path, :parameters, :description, :http_method, :response_class, :summary, :notes, :error_responses
 
     def initialize(yard_object)
       @description = yard_object.docstring
       @parameters  = []
+      @model_names = []
       
       yard_object.tags.each do |tag|
         value = tag.text
@@ -61,6 +62,7 @@ module SwaggerYard
     ##
     # Example: [GET] /api/v2/ownerships.{format_type}
     def parse_path(string)
+      # TODO: switch to :with_types_and_title on tag parsing
       @http_method, @path = string.match(/^\[(\w*)\]\s*(.*)$/).captures
 
       path_params = @path.scan(/\{([^\}]+)\}/).flatten.reject { |value| value == "format_type" }
@@ -82,17 +84,26 @@ module SwaggerYard
     # Example: [Array]     status(required)  Filter by status. (e.g. status[]=1&status[]=2&status[]=3)
     # Example: [Integer]   media[media_type_id]                          ID of the desired media type.
     def parse_parameter(string)
+      # TODO: switch to :with_types_and_name on tag parsing
       data_type, name, required, description = string.match(/\A\[(\w*)\]\s*([\w\[\]]*)(\(required\))?\s*(.*)\Z/).captures
       allow_multiple = name.gsub!("[]", "")
+
+      type_hash = if ref?(data_type)
+        @model_names << data_type
+        {"$ref" => data_type}
+      else
+        {"dataType" => data_type.downcase}
+      end
+
+        @model_names << data_type
 
       parameter = {
         "paramType"     => "query",
         "name"          => name,
         "description"   => description,
-        "dataType"      => data_type.downcase,
         "required"      => required.present?,
         "allowMultiple" => allow_multiple.present?
-      }
+      }.merge(type_hash)
     end
 
     ##
@@ -127,6 +138,12 @@ module SwaggerYard
         "allowMultiple"   => false,
         "allowableValues" => {"valueType" => "LIST", "values" => ["json", "xml"]}
       }
+    end
+
+    private
+
+    def ref?(data_type)
+      SwaggerYard.models.map(&:id).include?(data_type)
     end
   end
 end

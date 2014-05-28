@@ -1,1 +1,131 @@
-{"apiVersion":"1.0","swaggerVersion":"1.1","basePath":"http://localhost:3000/swagger/api","apis":[{"path":"/pets","description":"This document describes the API for interacting with Pet resources"}]}
+{
+  "apiVersion":"1.0",
+  "swaggerVersion":"1.1",
+  "basePath":"http://localhost:3000/swagger/api",
+  "resourcePath":"/pets",
+  "apis":[
+    {
+      "path":"/pets.{format_type}",
+      "description":"return a list of Pets",
+      "operations":[
+        {
+          "httpMethod":"GET",
+          "nickname":"pets-format-type-get",
+          "responseClass":"void",
+          "produces":["application/json", "application/xml"],
+          "parameters":[
+            {
+              "paramType":"path",
+              "name":"format_type",
+              "description":"Response format either JSON or XML",
+              "dataType":"string",
+              "required":true,
+              "allowMultiple":false,
+              "allowableValues":{
+                "valueType":"LIST",
+                "values":["json", "xml"]
+              }
+            }
+          ],
+          "summary":"return a list of Pets",
+          "notes":null,
+          "errorResponses":null
+        }
+      ]
+    },
+    {
+      "path":"/pets/{id}.{format_type}",
+      "description":"return a Pet",
+      "operations":[
+        {
+          "httpMethod":"GET",
+          "nickname":"pets-id-format-type-get",
+          "responseClass":"void",
+          "produces":["application/json", "application/xml"],
+          "parameters":[
+            {
+              "paramType":"path",
+              "name":"id",
+              "description":"Scope response to id",
+              "dataType":"string",
+              "required":true,
+              "allowMultiple":false
+            },
+            {
+              "paramType":"query",
+              "name":"id",
+              "description":"The ID for the Pet",
+              "dataType":"integer",
+              "required":false,
+              "allowMultiple":false
+            },
+            {
+              "paramType":"path",
+              "name":"format_type",
+              "description":"Response format either JSON or XML",
+              "dataType":"string",
+              "required":true,
+              "allowMultiple":false,
+              "allowableValues":{
+                "valueType":"LIST",
+                "values":["json", "xml"]
+              }
+            }
+          ],
+          "summary":"return a Pet",
+          "notes":null,
+          "errorResponses":null
+        }
+      ]
+    },
+    {
+      "path":"/pets",
+      "description":"create a Pet",
+      "operations":[
+        {
+          "httpMethod":"POST",
+          "nickname":"petspost",
+          "responseClass":"void",
+          "produces":["application/json", "application/xml"],
+          "parameters":[
+            {
+              "paramType":"query",
+              "name":"pet",
+              "description":"The pet object",
+              "$ref":"Pet",
+              "required":false,
+              "allowMultiple":false
+            },
+            {
+              "paramType":"path",
+              "name":"format_type",
+              "description":"Response format either JSON or XML",
+              "dataType":"string",
+              "required":true,
+              "allowMultiple":false,
+              "allowableValues":{
+                "valueType":"LIST",
+                "values":["json", "xml"]
+              }
+            }
+          ],
+          "summary":"create a Pet",
+          "notes":null,
+          "errorResponses":null
+        }
+      ]
+    }
+  ],
+  "models":[
+    {
+      "Pet":{
+        "id":"Pet",
+        "properties":[
+          {"id":{"type":"integer"}},
+          {"name":{"type":"string"}},
+          {"age":{"type":"integer"}}
+        ]
+      }
+    }
+  ]
+}

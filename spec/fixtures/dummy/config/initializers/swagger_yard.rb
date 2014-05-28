@@ -5,5 +5,5 @@ SwaggerYard.configure do |config|
   config.doc_base_path = "http://localhost:3000/doc"
   config.api_base_path = "http://localhost:3000/api"
   config.doc_base_path = "http://localhost:3000/swagger/api"
-  config.api_base_path = "http://localhost:3000/swagger/doc"
+  config.api_base_path = "http://localhost:3000/swagger/api"
 end
