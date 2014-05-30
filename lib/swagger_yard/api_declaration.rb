@@ -4,7 +4,7 @@ module SwaggerYard
 
     def initialize
       @apis   = {}
-      @models = []
+      @model_names = []
     end
 
     def add_listing_info(yard_object)
@@ -15,6 +15,8 @@ module SwaggerYard
     end
 
     def add_api(api)
+      @model_names += api.model_names
+
       if @apis.keys.include?(api.path)
         same_api_path = @apis[api.path]
         same_api_path["operations"] << api.operation
@@ -33,9 +35,9 @@ module SwaggerYard
         "apiVersion"     => SwaggerYard.api_version,
         "swaggerVersion" => SwaggerYard.swagger_version,
         "basePath"       => SwaggerYard.api_base_path,
-        "resource_path"  => @resource_path,
+        "resourcePath"   => @resource_path,
         "apis"           => @apis.values,
-        "models"         => @models
+        "models"         => SwaggerYard.models.select {|m| @model_names.include?(m.id)}.map(&:to_h)
       }
     end
   end

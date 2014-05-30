@@ -12,10 +12,11 @@ module SwaggerYard
 
     def to_h
       { 
-        "apiVersion"     => SwaggerYard.api_version,
-        "swaggerVersion" => SwaggerYard.swagger_version,
-        "basePath"       => SwaggerYard.doc_base_path,
-        "apis"           => list_api
+        "apiVersion"      => SwaggerYard.api_version,
+        "swaggerVersion"  => SwaggerYard.swagger_version,
+        "basePath"        => SwaggerYard.doc_base_path,
+        "apis"            => list_api
+        # "authorizations"  => []
       }
     end
 
