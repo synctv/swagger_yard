@@ -95,6 +95,11 @@ To then use your `Model` in your `Controller` documentation, add `@parameter`s:
 
 ![Web UI](https://raw.github.com/tpitale/swagger_yard/master/example/web-ui.png)
 
+## Seeing the Swagger JSON ##
+
+You should now be able to start your application and visit `http://local-dev.domain:port/swagger/api` (if the engine is mounted at `/swagger` as above). You should see the output list each of the controllers you documented, and the paths to see their specific APIs.
+
+To see a specific controller visit `http://local-dev.domain:port/swagger/api/accounts/ownerships` as given in the `@resource_path` in the example above.
 
 ## Generators ##
 
