@@ -121,5 +121,7 @@ By default SwaggerYard will use a slightly modify version of the swagger-ui. Cha
 
 ## More Information ##
 
-[Swagger-ui](https://github.com/wordnik/swagger-ui)
-[Yard](https://github.com/lsegal/yard)
+* [Swagger-ui](https://github.com/wordnik/swagger-ui)
+* [Yard](https://github.com/lsegal/yard)
+* [Swagger-spec version 1.2](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
+
