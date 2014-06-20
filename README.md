@@ -27,6 +27,7 @@ Install the gem with Bunder:
       config.api_version = "0.1"
       config.doc_base_path = "http://swagger.example.com/doc"
       config.api_base_path = "http://swagger.example.com/api"
+      config.reload = Rails.env.development?
     end
 
 ### Mount your engine ###
