@@ -7,14 +7,18 @@ module SwaggerYard
       @model_names = []
     end
 
-    def add_listing_info(yard_object)
-      @description = yard_object.docstring if yard_object.docstring.present?
-      tag = yard_object.tags.find { |tag| tag.tag_name == "resource_path"}
-      @resource_path = tag.text.downcase if tag.present?
-      tag.present?
+    def valid?
+      !@resource_path.nil?
+    end
+
+    def add_listing_info(listing_info)
+      @description = listing_info.description
+      @resource_path = listing_info.resource_path
     end
 
     def add_api(api)
+      return unless api.valid?
+
       @model_names += api.model_names
 
       if @apis.keys.include?(api.path)
@@ -30,14 +34,20 @@ module SwaggerYard
       @resource_path
     end
 
+    attr_reader :resource_path, :apis
+
+    def models
+      SwaggerYard.models.select {|m| @model_names.include?(m.id)}
+    end
+
     def to_h
       { 
         "apiVersion"     => SwaggerYard.config.api_version,
         "swaggerVersion" => SwaggerYard.config.swagger_version,
         "basePath"       => SwaggerYard.config.api_base_path,
-        "resourcePath"   => @resource_path,
-        "apis"           => @apis.values,
-        "models"         => SwaggerYard.models.select {|m| @model_names.include?(m.id)}.map(&:to_h)
+        "resourcePath"   => resource_path,
+        "apis"           => apis.values,
+        "models"         => models.map(&:to_h)
       }
     end
   end
