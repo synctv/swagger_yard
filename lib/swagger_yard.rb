@@ -37,10 +37,9 @@ module SwaggerYard
     # @return [YARD] objects representing class/methods and tags from the file
     # 
     def yard_objects_from_file(file_path)
-      ::YARD.parse(file_path)
-      yard_objects = ::YARD::Registry.all
       ::YARD::Registry.clear
-      yard_objects
+      ::YARD.parse(file_path)
+      ::YARD::Registry.all
     end
 
     def parse_file(file_path)
