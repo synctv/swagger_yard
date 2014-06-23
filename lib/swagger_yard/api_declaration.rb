@@ -32,9 +32,9 @@ module SwaggerYard
 
     def to_h
       { 
-        "apiVersion"     => SwaggerYard.api_version,
-        "swaggerVersion" => SwaggerYard.swagger_version,
-        "basePath"       => SwaggerYard.api_base_path,
+        "apiVersion"     => SwaggerYard.config.api_version,
+        "swaggerVersion" => SwaggerYard.config.swagger_version,
+        "basePath"       => SwaggerYard.config.api_base_path,
         "resourcePath"   => @resource_path,
         "apis"           => @apis.values,
         "models"         => SwaggerYard.models.select {|m| @model_names.include?(m.id)}.map(&:to_h)

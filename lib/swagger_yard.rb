@@ -1,5 +1,6 @@
 require "yard"
 require "json"
+require "swagger_yard/configuration"
 require "swagger_yard/engine"
 require "swagger_yard/cache"
 require "swagger_yard/parser"
@@ -17,34 +18,12 @@ module SwaggerYard
     #     config.api_base_path = "http://swagger.example.com/api"
     #   end
     def configure
-      yield self
+      @configuration ||= Configuration.new
+      yield @configuration
     end
 
-    attr_accessor :doc_base_path, :api_base_path, :api_path
-    attr_writer :swagger_version, :api_version, :cache_store, :cache_prefix, :enable, :reload
-
-    def cache_store
-      @cache_store ||= Rails.cache
-    end
-    
-    def cache_prefix
-      @cache_prefix ||= "swagger_yard/"
-    end
-
-    def swagger_version
-      @swagger_version ||= "1.1"
-    end
-
-    def api_version
-      @api_version ||= "0.1"
-    end
-
-    def enable
-      @enable ||= false
-    end
-
-    def reload
-      @reload ||= false
+    def config
+      @configuration
     end
 
     def resource_to_file_path
@@ -78,7 +57,7 @@ module SwaggerYard
     end
 
     def get_api(resource_name)
-      if reload
+      if config.reload
         parse_file(resource_to_file_path[resource_name]).to_h
       else
         cache.fetch(resource_name) { parse_file(resource_to_file_path[resource_name]).to_h }
@@ -86,7 +65,7 @@ module SwaggerYard
     end
 
     def models
-      if reload
+      if config.reload
         parse_models
       else
         cache.fetch("models") { parse_models }
@@ -94,7 +73,7 @@ module SwaggerYard
     end
 
     def get_listing
-      if reload
+      if config.reload
         parse_controllers
       else
         cache.fetch("listing_index") { parse_controllers }
@@ -119,7 +98,7 @@ module SwaggerYard
     end
 
     def cache
-      @cache ||= Cache.new(cache_store, cache_prefix)
+      @cache ||= Cache.new(config.cache_store, config.cache_prefix)
     end
 
     def parse_models
