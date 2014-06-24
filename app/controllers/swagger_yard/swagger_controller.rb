@@ -3,19 +3,25 @@ module SwaggerYard
     layout false
 
     def index
-      swagger_listing = SwaggerYard.get_listing
-      swagger_listing.merge!("basePath" => request.url) if swagger_listing["basePath"].blank?
-      render :json => swagger_listing
+      listing = resource_listing.to_h
+      listing.merge!("basePath" => request.url) if listing["basePath"].blank?
+      render :json => listing
     end
 
     def show
-      swagger_api = SwaggerYard.get_api("/#{params[:resource]}")
-      swagger_api.merge!("basePath" => request.base_url + SwaggerYard.api_path) if swagger_api["basePath"].blank? 
-      render :json => swagger_api
+      declaration = resource_listing.declaration_for("/#{params[:resource]}").to_h
+
+      declaration.merge!("basePath" => request.base_url + SwaggerYard.config.api_path) if declaration["basePath"].blank? 
+      render :json => declaration
     end
 
     def doc
       render :doc
+    end
+
+    private
+    def resource_listing
+      SwaggerYard::ResourceListing.new(Rails.root+'/app/controllers/**/*.rb', Rails.root+'/app/models/**/*.rb')
     end
   end
 end

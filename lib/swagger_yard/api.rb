@@ -3,7 +3,9 @@ module SwaggerYard
     attr_reader :nickname, :model_names
     attr_accessor :path, :parameters, :description, :http_method, :response_class, :summary, :notes, :error_responses
 
-    def initialize(yard_object)
+    def initialize(resource_listing, yard_object)
+      @resource_listing = resource_listing
+
       @description = yard_object.docstring
       @parameters  = []
       @model_names = []
@@ -143,7 +145,7 @@ module SwaggerYard
     private
 
     def ref?(data_type)
-      SwaggerYard.models.map(&:id).include?(data_type)
+      @resource_listing.models.map(&:id).include?(data_type)
     end
   end
 end

@@ -3,8 +3,9 @@ require 'spec_helper'
 describe SwaggerYard::Api do
   context "with a parsed yard object" do
     let(:yard_object) {stub(docstring: 'A Description')}
+    let(:resource_listing) {SwaggerYard::ResourceListing.new(nil, nil)}
 
-    let(:api) {SwaggerYard::Api.new(yard_object)}
+    let(:api) {SwaggerYard::Api.new(resource_listing, yard_object)}
 
     context "with a path" do
       let(:tags) { [stub(tag_name: "path", text: "[GET] /accounts/ownerships.{format_type}")] }

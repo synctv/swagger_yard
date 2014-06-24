@@ -1,14 +1,33 @@
 module SwaggerYard
   class ApiDeclaration
     attr_accessor :description, :resource_path
+    attr_reader :apis
 
-    def initialize
+    def initialize(resource_listing)
+      @resource_listing = resource_listing
+
       @apis   = {}
       @model_names = []
     end
 
     def valid?
       !@resource_path.nil?
+    end
+
+    def add_yard_objects(yard_objects)
+      yard_objects.each do |yard_object|
+        add_yard_object(yard_object)
+      end
+      self
+    end
+
+    def add_yard_object(yard_object)
+      case yard_object.type
+      when :class
+        add_listing_info(ListingInfo.new(yard_object))
+      when :method
+        add_api(Api.new(@resource_listing, yard_object))
+      end
     end
 
     def add_listing_info(listing_info)
@@ -34,10 +53,8 @@ module SwaggerYard
       @resource_path
     end
 
-    attr_reader :resource_path, :apis
-
     def models
-      SwaggerYard.models.select {|m| @model_names.include?(m.id)}
+      @resource_listing.models.select {|m| @model_names.include?(m.id)}
     end
 
     def to_h
@@ -48,6 +65,13 @@ module SwaggerYard
         "resourcePath"   => resource_path,
         "apis"           => apis.values,
         "models"         => models.map(&:to_h)
+      }
+    end
+
+    def listing_hash
+      {
+        "path"        => resource_path,
+        "description" => description
       }
     end
   end

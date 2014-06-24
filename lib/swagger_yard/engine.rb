@@ -8,7 +8,9 @@ module SwaggerYard
     end
 
     initializer "swagger_yard.finisher_hook" do |app|
-      SwaggerYard.generate!("#{app.root}/app/controllers/**/*.rb")
+      SwaggerYard.register_custom_yard_tags!
+
+      # SwaggerYard.generate!("#{app.root}/app/controllers/**/*.rb")
     end
   end
 end
