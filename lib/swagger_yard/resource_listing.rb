@@ -41,7 +41,7 @@ module SwaggerYard
 
       Dir[@model_path].map do |file_path|
         Model.from_yard_objects(SwaggerYard.yard_objects_from_file(file_path))
-      end.select(&:valid?)
+      end.compact.select(&:valid?)
     end
 
     def parse_controllers
