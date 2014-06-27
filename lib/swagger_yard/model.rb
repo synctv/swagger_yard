@@ -22,6 +22,10 @@ module SwaggerYard
       @properties = []
     end
 
+    def valid?
+      !id.nil?
+    end
+
     def parse_tags(tags)
       tags.each do |tag|
         case tag.tag_name
