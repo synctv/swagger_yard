@@ -15,7 +15,9 @@ module SwaggerYard
     end
 
     def self.from_tags(tags)
-      new.parse_tags(tags)
+      new.tap do |model|
+        model.parse_tags(tags)
+      end
     end
 
     def initialize
