@@ -5,22 +5,22 @@
     <link href='//fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'/>
     <link href='../swagger-ui/css/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
     <link href='../swagger-ui/css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+  <script type="text/javascript" src="../swagger-ui/lib/shred.bundle.js"></script>
     <script src='../swagger-ui/lib/jquery-1.8.0.min.js' type='text/javascript'></script>
     <script src='../swagger-ui/lib/jquery.slideto.min.js' type='text/javascript'></script>
     <script src='../swagger-ui/lib/jquery.wiggle.min.js' type='text/javascript'></script>
     <script src='../swagger-ui/lib/jquery.ba-bbq.min.js' type='text/javascript'></script>
-    <script src='../swagger-ui/lib/handlebars-1.0.rc.1.js' type='text/javascript'></script>
+    <script src='../swagger-ui/lib/handlebars-1.0.0.js' type='text/javascript'></script>
     <script src='../swagger-ui/lib/underscore-min.js' type='text/javascript'></script>
     <script src='../swagger-ui/lib/backbone-min.js' type='text/javascript'></script>
     <script src='../swagger-ui/lib/swagger.js' type='text/javascript'></script>
-    <script src='../swagger-ui/lib/MD5.js' type='text/javascript'></script>
     <script src='../swagger-ui/lib/highlight.7.3.pack.js' type='text/javascript'></script>
     <script src='../swagger-ui/swagger-ui.js' type='text/javascript'></script>
 
     <script type="text/javascript">
 	$(function () {
 	    window.swaggerUi = new SwaggerUi({
-                discoveryUrl: location.protocol + "//" + location.host + "/swagger/api",
+                url: location.protocol + "//" + location.host + "/swagger/api",
                 dom_id:"swagger-ui-container",
                 supportHeaderParams: true,
                 supportedSubmitMethods: ['get', 'post', 'put'],
