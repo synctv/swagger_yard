@@ -23,11 +23,14 @@ Install the gem with Bunder:
     
     # config/initializers/swagger_yard.rb
     SwaggerYard.configure do |config|
-      config.swagger_version = "1.1"
-      config.api_version = "0.1"
-      config.doc_base_path = "http://swagger.example.com/doc"
-      config.api_base_path = "http://swagger.example.com/api"
+      config.swagger_version = "1.2"
+      config.api_version = "1.0"
       config.reload = Rails.env.development?
+
+      # where your swagger spec json will show up
+      config.swagger_spec_base_path = "http://localhost:3000/swagger/api"
+      # where your actual api is hosted from
+      config.api_base_path = "http://localhost:3000/api"
     end
 
 ### Mount your engine ###

@@ -25,7 +25,7 @@ module SwaggerYard
       { 
         "apiVersion"      => SwaggerYard.config.api_version,
         "swaggerVersion"  => SwaggerYard.config.swagger_version,
-        "basePath"        => SwaggerYard.config.api_base_path,
+        "basePath"        => SwaggerYard.config.swagger_spec_base_path,
         "apis"            => list_api_declarations
         # "authorizations"  => []
       }

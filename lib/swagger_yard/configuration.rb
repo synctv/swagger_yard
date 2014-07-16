@@ -1,6 +1,6 @@
 module SwaggerYard
   class Configuration
-    attr_accessor :doc_base_path, :api_base_path, :api_path
+    attr_accessor :swagger_spec_base_path, :api_base_path, :api_path
     attr_accessor :swagger_version, :api_version
     attr_accessor :cache_store, :cache_prefix
     attr_accessor :enable, :reload
