@@ -705,7 +705,7 @@ var SwaggerOperation = function(nickname, path, method, parameters, summary, not
     param.name = param.name || param.type || param.dataType;
 
     // for 1.1 compatibility
-    var type = param.type || param.dataType || param.$ref;
+    var type = param.type || param.dataType;
     if(type === 'array') {
       type = 'array[' + (param.items.$ref ? param.items.$ref : param.items.type) + ']';
     }

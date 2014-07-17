@@ -74,7 +74,7 @@ module SwaggerYard
           "paramType"     => "path",
           "name"          => path_param,
           "description"   => "Scope response to #{path_param}",
-          "dataType"      => "string",
+          "type"          => "string",
           "required"      => true,
           "allowMultiple" => false
         }
@@ -92,15 +92,13 @@ module SwaggerYard
 
       type_hash = if ref?(data_type)
         @model_names << data_type
-        {"$ref" => data_type}
+        {"type" => data_type}
       else
-        {"dataType" => data_type.downcase}
+        {"type" => data_type.downcase}
       end
 
-        @model_names << data_type
-
       parameter = {
-        "paramType"     => "query",
+        "paramType"     => "query", # TODO allow alternative param type
         "name"          => name,
         "description"   => description,
         "required"      => required.present?,
@@ -123,7 +121,7 @@ module SwaggerYard
         "paramType"       => "query",
         "name"            => name,
         "description"     => description,
-        "dataType"        => data_type.downcase,
+        "type"            => data_type.downcase,
         "required"        => required.present?,
         "allowMultiple"   => false,
         "allowableValues" => {"valueType" => 'LIST', "values" => list_values}
@@ -135,7 +133,7 @@ module SwaggerYard
         "paramType"       => "path",
         "name"            => "format_type",
         "description"     => "Response format either JSON or XML",
-        "dataType"        => "string",
+        "type"            => "string",
         "required"        => true,
         "allowMultiple"   => false,
         "allowableValues" => {"valueType" => "LIST", "values" => ["json", "xml"]}

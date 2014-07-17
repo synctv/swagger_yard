@@ -18,7 +18,7 @@
               "paramType":"path",
               "name":"format_type",
               "description":"Response format either JSON or XML",
-              "dataType":"string",
+              "type":"string",
               "required":true,
               "allowMultiple":false,
               "allowableValues":{
@@ -47,7 +47,7 @@
               "paramType":"path",
               "name":"id",
               "description":"Scope response to id",
-              "dataType":"string",
+              "type":"string",
               "required":true,
               "allowMultiple":false
             },
@@ -55,7 +55,7 @@
               "paramType":"query",
               "name":"id",
               "description":"The ID for the Pet",
-              "dataType":"integer",
+              "type":"integer",
               "required":false,
               "allowMultiple":false
             },
@@ -63,7 +63,7 @@
               "paramType":"path",
               "name":"format_type",
               "description":"Response format either JSON or XML",
-              "dataType":"string",
+              "type":"string",
               "required":true,
               "allowMultiple":false,
               "allowableValues":{
@@ -92,7 +92,7 @@
               "paramType":"query",
               "name":"pet",
               "description":"The pet object",
-              "$ref":"Pet",
+              "type":"Pet",
               "required":false,
               "allowMultiple":false
             },
@@ -100,7 +100,7 @@
               "paramType":"path",
               "name":"format_type",
               "description":"Response format either JSON or XML",
-              "dataType":"string",
+              "type":"string",
               "required":true,
               "allowMultiple":false,
               "allowableValues":{
