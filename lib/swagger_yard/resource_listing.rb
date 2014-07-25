@@ -1,12 +1,14 @@
 module SwaggerYard
   class ResourceListing
     attr_reader :api_declarations, :resource_to_file_path
+    attr_accessor :authorizations
 
     def initialize(controller_path, model_path)
       @model_path = model_path
       @controller_path = controller_path
 
       @resource_to_file_path = {}
+      @authorizations = []
     end
 
     def models
@@ -26,8 +28,8 @@ module SwaggerYard
         "apiVersion"      => SwaggerYard.config.api_version,
         "swaggerVersion"  => SwaggerYard.config.swagger_version,
         "basePath"        => SwaggerYard.config.swagger_spec_base_path,
-        "apis"            => list_api_declarations
-        # "authorizations"  => []
+        "apis"            => list_api_declarations,
+        "authorizations"  => authorizations_hash
       }
     end
 
@@ -58,6 +60,13 @@ module SwaggerYard
       yard_objects = SwaggerYard.yard_objects_from_file(file_path)
 
       ApiDeclaration.new(self).add_yard_objects(yard_objects)
+    end
+
+    def authorizations_hash
+      p authorizations
+      Hash[
+        authorizations.map(&:name).zip(authorizations.map(&:to_h)) # ugh
+      ]
     end
   end
 end
