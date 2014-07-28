@@ -1,12 +1,13 @@
 module SwaggerYard
   class ApiDeclaration
     attr_accessor :description, :resource_path
-    attr_reader :apis
+    attr_reader :apis, :authorizations
 
     def initialize(resource_listing)
       @resource_listing = resource_listing
 
       @apis   = {}
+      @authorizations = {}
     end
 
     def valid?
@@ -33,6 +34,9 @@ module SwaggerYard
     def add_listing_info(listing_info)
       @description = listing_info.description
       @resource_path = listing_info.resource_path
+
+      # we only have api_key auth, the value for now is always empty array
+      @authorizations = Hash[listing_info.authorizations.uniq.map {|k| [k, []]}]
     end
 
     def add_api(yard_object)
@@ -71,7 +75,8 @@ module SwaggerYard
         "basePath"       => SwaggerYard.config.api_base_path,
         "resourcePath"   => resource_path,
         "apis"           => apis.values.map(&:to_h),
-        "models"         => Hash[models.map {|m| [m.id, m.to_h]}]
+        "models"         => Hash[models.map {|m| [m.id, m.to_h]}],
+        "authorizations"  => authorizations
       }
     end
 

@@ -62,6 +62,7 @@ module SwaggerYard
       ::YARD::Tags::Library.define_tag("Model resource", :model)
       ::YARD::Tags::Library.define_tag("Model property", :property, :with_types_and_name)
       ::YARD::Tags::Library.define_tag("Authorization", :authorization, :with_types_and_name)
+      ::YARD::Tags::Library.define_tag("Authorization Use", :authorize_with)
     end
   end
 end

@@ -63,7 +63,6 @@ module SwaggerYard
     end
 
     def authorizations_hash
-      p authorizations
       Hash[
         authorizations.map(&:name).zip(authorizations.map(&:to_h)) # ugh
       ]

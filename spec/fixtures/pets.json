@@ -133,5 +133,8 @@
         "age":{"type":"integer"}
       }
     }
+  },
+  "authorizations":{
+    "header_x_application_api_key":[]
   }
 }
