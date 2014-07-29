@@ -15,6 +15,14 @@
           "produces":["application/json", "application/xml"],
           "parameters":[
             {
+              "paramType":"query",
+              "name":"client_name",
+              "description":"The name of the client using the API",
+              "type":"string",
+              "required":true,
+              "allowMultiple":false
+            },
+            {
               "paramType":"path",
               "name":"format_type",
               "description":"Response format either JSON or XML",
@@ -89,11 +97,11 @@
           "produces":["application/json", "application/xml"],
           "parameters":[
             {
-              "paramType":"query",
+              "paramType":"body",
               "name":"pet",
               "description":"The pet object",
               "type":"Pet",
-              "required":false,
+              "required":true,
               "allowMultiple":false
             },
             {

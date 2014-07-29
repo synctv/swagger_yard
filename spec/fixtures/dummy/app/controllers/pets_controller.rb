@@ -6,6 +6,7 @@
 class PetsController < ApplicationController
   # return a list of Pets
   # @path [GET] /pets.{format_type}
+  # @parameter [string] client_name(required) The name of the client using the API
   def index
   end
 
@@ -17,7 +18,7 @@ class PetsController < ApplicationController
 
   # create a Pet
   # @path [POST] /pets
-  # @parameter [Pet] pet The pet object
+  # @parameter [Pet] pet(required, body) The pet object
   def create
   end
 
