@@ -28,9 +28,9 @@ module SwaggerYard
     def initialize(name, data_type, description, options={})
       @name, @data_type, @description = name, data_type, description
 
-      @required = options.fetch(:required, false)
-      @param_type = options.fetch(:param_type, 'query')
-      @allow_multiple = options.fetch(:allow_multiple, false)
+      @required = options[:required] || false
+      @param_type = options[:param_type] || 'query'
+      @allow_multiple = options[:allow_multiple] || false
     end
 
     def to_h
