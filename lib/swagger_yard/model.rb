@@ -46,7 +46,7 @@ module SwaggerYard
 
       {
         "id" => id,
-        "properties" => @properties.map(&:to_h)
+        "properties" => Hash[@properties.map {|property| [property.name, property.to_h]}]
       }
     end
 
@@ -56,6 +56,8 @@ module SwaggerYard
   # Holds the name and type for a single model property
   # 
   class Property
+    attr_reader :name
+
     def self.from_tag(tag)
       new(tag.name, tag.types.first, tag.text)
     end
@@ -66,9 +68,7 @@ module SwaggerYard
 
     def to_h
       {
-        @name => {
-          "type" => @type
-        }
+        "type" => @type
       }
     end
   end
