@@ -64,7 +64,7 @@ module SwaggerYard
         "basePath"       => SwaggerYard.config.api_base_path,
         "resourcePath"   => resource_path,
         "apis"           => apis.values,
-        "models"         => models.map(&:to_h)
+        "models"         => Hash[models.map {|m| [m.id, m.to_h]}]
       }
     end
 

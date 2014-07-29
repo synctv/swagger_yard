@@ -45,10 +45,8 @@ module SwaggerYard
       raise "Model is missing @model tag" if id.nil?
 
       {
-        id => {
-          "id" => id,
-          "properties" => @properties.map(&:to_h)
-        }
+        "id" => id,
+        "properties" => @properties.map(&:to_h)
       }
     end
 
