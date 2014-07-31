@@ -2,6 +2,7 @@ require "yard"
 require "json"
 require "swagger_yard/configuration"
 require "swagger_yard/parameter"
+require "swagger_yard/operation"
 require "swagger_yard/resource_listing"
 require "swagger_yard/api_declaration"
 require "swagger_yard/model"
@@ -50,7 +51,7 @@ module SwaggerYard
     def register_custom_yard_tags!
       ::YARD::Tags::Library.define_tag("Api resource", :resource)
       ::YARD::Tags::Library.define_tag("Resource path", :resource_path)
-      ::YARD::Tags::Library.define_tag("Api path", :path)
+      ::YARD::Tags::Library.define_tag("Api path", :path, :with_types)
       ::YARD::Tags::Library.define_tag("Parameter", :parameter)
       ::YARD::Tags::Library.define_tag("Parameter list", :parameter_list)
       ::YARD::Tags::Library.define_tag("Status code", :status_code)
