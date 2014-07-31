@@ -7,7 +7,6 @@ module SwaggerYard
       @resource_listing = resource_listing
 
       @apis   = {}
-      @model_names = []
     end
 
     def valid?
@@ -26,7 +25,7 @@ module SwaggerYard
       when :class
         add_listing_info(ListingInfo.new(yard_object))
       when :method
-        add_api(Api.new(@resource_listing, yard_object))
+        add_api(yard_object)
       end
     end
 
@@ -35,18 +34,13 @@ module SwaggerYard
       @resource_path = listing_info.resource_path
     end
 
-    def add_api(api)
-      return unless api.valid?
+    def add_api(yard_object)
+      path = Api.path_from_yard_object(yard_object)
 
-      @model_names += api.model_names
+      return if path.nil?
 
-      if @apis.keys.include?(api.path)
-        same_api_path = @apis[api.path]
-        same_api_path["operations"] << api.operation
-        @apis[api.path] = same_api_path
-      else
-        @apis[api.path] = api.to_h
-      end 
+      api = (apis[path] ||= Api.from_yard_object(yard_object, self))
+      api.add_operation(yard_object)
     end
 
     def resource_name
@@ -54,7 +48,12 @@ module SwaggerYard
     end
 
     def models
-      @resource_listing.models.select {|m| @model_names.include?(m.id)}
+      model_names = model_names_from_apis
+      @resource_listing.models.select {|m| model_names.include?(m.id)}
+    end
+
+    def ref?(name)
+      @resource_listing.models.map(&:id).include?(name)
     end
 
     def to_h
@@ -63,7 +62,7 @@ module SwaggerYard
         "swaggerVersion" => SwaggerYard.config.swagger_version,
         "basePath"       => SwaggerYard.config.api_base_path,
         "resourcePath"   => resource_path,
-        "apis"           => apis.values,
+        "apis"           => apis.values.map(&:to_h),
         "models"         => Hash[models.map {|m| [m.id, m.to_h]}]
       }
     end
@@ -73,6 +72,11 @@ module SwaggerYard
         "path"        => resource_path,
         "description" => description
       }
+    end
+
+    private
+    def model_names_from_apis
+      apis.values.map(&:model_names).flatten.uniq
     end
   end
 end
