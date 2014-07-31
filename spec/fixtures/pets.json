@@ -11,7 +11,7 @@
         {
           "httpMethod":"GET",
           "nickname":"pets-format-type-get",
-          "responseClass":"void",
+          "type":"void",
           "produces":["application/json", "application/xml"],
           "parameters":[
             {
@@ -37,7 +37,7 @@
           ],
           "summary":"return a list of Pets",
           "notes":null,
-          "errorResponses":null
+          "responseMessages":[]
         }
       ]
     },
@@ -48,7 +48,7 @@
         {
           "httpMethod":"GET",
           "nickname":"pets-id-format-type-get",
-          "responseClass":"void",
+          "type":"Pet",
           "produces":["application/json", "application/xml"],
           "parameters":[
             {
@@ -82,7 +82,17 @@
           ],
           "summary":"return a Pet",
           "notes":null,
-          "errorResponses":null
+          "responseMessages":[
+            {
+              "code": 404,
+              "message": "Pet not found",
+              "responseModel": "EmptyPet"
+            },
+            {
+              "code": 400,
+              "message": "Invalid ID supplied"
+            }
+          ]
         }
       ]
     },
@@ -93,7 +103,7 @@
         {
           "httpMethod":"POST",
           "nickname":"petspost",
-          "responseClass":"void",
+          "type":"void",
           "produces":["application/json", "application/xml"],
           "parameters":[
             {
@@ -119,7 +129,7 @@
           ],
           "summary":"create a Pet",
           "notes":null,
-          "errorResponses":null
+          "responseMessages":[]
         }
       ]
     }
