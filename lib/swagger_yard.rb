@@ -3,6 +3,7 @@ require "json"
 require "swagger_yard/configuration"
 require "swagger_yard/parameter"
 require "swagger_yard/operation"
+require "swagger_yard/authorization"
 require "swagger_yard/resource_listing"
 require "swagger_yard/api_declaration"
 require "swagger_yard/model"
@@ -60,6 +61,8 @@ module SwaggerYard
       ::YARD::Tags::Library.define_tag("Api Summary", :summary)
       ::YARD::Tags::Library.define_tag("Model resource", :model)
       ::YARD::Tags::Library.define_tag("Model property", :property, :with_types_and_name)
+      ::YARD::Tags::Library.define_tag("Authorization", :authorization, :with_types_and_name)
+      ::YARD::Tags::Library.define_tag("Authorization Use", :authorize_with)
     end
   end
 end
