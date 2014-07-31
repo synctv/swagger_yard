@@ -15,6 +15,7 @@ class PetsController < ApplicationController
   # return a Pet
   # @path [GET] /pets/{id}.{format_type}
   # @parameter [integer] id The ID for the Pet
+  # @response_type Pet
   def show
   end
 

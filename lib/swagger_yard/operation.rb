@@ -1,7 +1,7 @@
 module SwaggerYard
   class Operation
-    attr_accessor :summary, :notes
-    attr_reader :path, :http_method, :response_class, :error_responses
+    attr_accessor :summary, :notes, :response_type
+    attr_reader :path, :http_method, :error_responses
     attr_reader :parameters, :model_names
 
     PARAMETER_LIST_REGEX = /\A\[(\w*)\]\s*(\w*)(\(required\))?\s*(.*)\n([.\s\S]*)\Z/
@@ -17,6 +17,8 @@ module SwaggerYard
             operation.add_parameter(tag)
           when "parameter_list"
             operation.add_parameter_list(tag)
+          when "response_type"
+            operation.response_type = tag.text
           when "summary"
             operation.summary = tag.text
           when "notes"
@@ -43,7 +45,7 @@ module SwaggerYard
       {
         "httpMethod"     => http_method,
         "nickname"       => nickname,
-        "responseClass"  => response_class || "void",
+        "type"           => response_type || "void",
         "produces"       => ["application/json", "application/xml"],
         "parameters"     => parameters.map(&:to_h),
         "summary"        => summary || @api.description,

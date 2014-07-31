@@ -11,7 +11,7 @@
         {
           "httpMethod":"GET",
           "nickname":"pets-format-type-get",
-          "responseClass":"void",
+          "type":"void",
           "produces":["application/json", "application/xml"],
           "parameters":[
             {
@@ -48,7 +48,7 @@
         {
           "httpMethod":"GET",
           "nickname":"pets-id-format-type-get",
-          "responseClass":"void",
+          "type":"Pet",
           "produces":["application/json", "application/xml"],
           "parameters":[
             {
@@ -93,7 +93,7 @@
         {
           "httpMethod":"POST",
           "nickname":"petspost",
-          "responseClass":"void",
+          "type":"void",
           "produces":["application/json", "application/xml"],
           "parameters":[
             {
