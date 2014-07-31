@@ -37,7 +37,7 @@
           ],
           "summary":"return a list of Pets",
           "notes":null,
-          "errorResponses":null
+          "responseMessages":[]
         }
       ]
     },
@@ -82,7 +82,17 @@
           ],
           "summary":"return a Pet",
           "notes":null,
-          "errorResponses":null
+          "responseMessages":[
+            {
+              "code": 404,
+              "message": "Pet not found",
+              "responseModel": "EmptyPet"
+            },
+            {
+              "code": 400,
+              "message": "Invalid ID supplied"
+            }
+          ]
         }
       ]
     },
@@ -119,7 +129,7 @@
           ],
           "summary":"create a Pet",
           "notes":null,
-          "errorResponses":null
+          "responseMessages":[]
         }
       ]
     }

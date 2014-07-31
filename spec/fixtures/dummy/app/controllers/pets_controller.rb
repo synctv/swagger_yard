@@ -16,6 +16,8 @@ class PetsController < ApplicationController
   # @path [GET] /pets/{id}.{format_type}
   # @parameter [integer] id The ID for the Pet
   # @response_type Pet
+  # @error_message [EmptyPet] 404 Pet not found
+  # @error_message 400 Invalid ID supplied
   def show
   end
 

@@ -1,7 +1,7 @@
 module SwaggerYard
   class Operation
     attr_accessor :summary, :notes, :response_type
-    attr_reader :path, :http_method, :error_responses
+    attr_reader :path, :http_method, :error_messages
     attr_reader :parameters, :model_names
 
     PARAMETER_LIST_REGEX = /\A\[(\w*)\]\s*(\w*)(\(required\))?\s*(.*)\n([.\s\S]*)\Z/
@@ -19,6 +19,8 @@ module SwaggerYard
             operation.add_parameter_list(tag)
           when "response_type"
             operation.response_type = tag.text
+          when "error_message"
+            operation.add_error_message(tag)
           when "summary"
             operation.summary = tag.text
           when "notes"
@@ -35,6 +37,7 @@ module SwaggerYard
       @api = api
       @parameters = []
       @model_names = []
+      @error_messages = []
     end
 
     def nickname
@@ -43,14 +46,14 @@ module SwaggerYard
 
     def to_h
       {
-        "httpMethod"     => http_method,
-        "nickname"       => nickname,
-        "type"           => response_type || "void",
-        "produces"       => ["application/json", "application/xml"],
-        "parameters"     => parameters.map(&:to_h),
-        "summary"        => summary || @api.description,
-        "notes"          => notes,
-        "errorResponses" => error_responses
+        "httpMethod"        => http_method,
+        "nickname"          => nickname,
+        "type"              => response_type || "void",
+        "produces"          => ["application/json", "application/xml"],
+        "parameters"        => parameters.map(&:to_h),
+        "summary"           => summary || @api.description,
+        "notes"             => notes,
+        "responseMessages"  => error_messages
       }
     end
 
@@ -92,6 +95,14 @@ module SwaggerYard
         allow_multiple: false,
         allowable_values: allowable_values
       })
+    end
+
+    def add_error_message(tag)
+      @error_messages << {
+        "code" => Integer(tag.name),
+        "message" => tag.text,
+        "responseModel" => Array.wrap(tag.types).first
+      }.reject {|_,v| v.nil?}
     end
 
     def sort_parameters
