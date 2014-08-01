@@ -11,7 +11,7 @@ module SwaggerYard
     def show
       declaration = resource_listing.declaration_for("/#{params[:resource]}").to_h
 
-      declaration.merge!("basePath" => request.base_url + SwaggerYard.config.api_path) if declaration["basePath"].blank? 
+      declaration.merge!("basePath" => request.base_url + SwaggerYard.config.api_path) if declaration["basePath"].blank?
       render :json => declaration
     end
 

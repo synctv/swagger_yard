@@ -24,7 +24,7 @@ module SwaggerYard
     end
 
     def to_h
-      { 
+      {
         "apiVersion"      => SwaggerYard.config.api_version,
         "swaggerVersion"  => SwaggerYard.config.swagger_version,
         "basePath"        => SwaggerYard.config.swagger_spec_base_path,

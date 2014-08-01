@@ -60,7 +60,7 @@ module SwaggerYard
     end
 
     def models
-      model_names = model_names_from_apis
+      model_names = (model_names_from_apis + model_names_from_model_properties).uniq
       @resource_listing.models.select {|m| model_names.include?(m.id)}
     end
 
@@ -69,7 +69,7 @@ module SwaggerYard
     end
 
     def to_h
-      { 
+      {
         "apiVersion"     => SwaggerYard.config.api_version,
         "swaggerVersion" => SwaggerYard.config.swagger_version,
         "basePath"       => SwaggerYard.config.api_base_path,
@@ -90,6 +90,10 @@ module SwaggerYard
     private
     def model_names_from_apis
       apis.values.map(&:model_names).flatten.uniq
+    end
+
+    def model_names_from_model_properties
+      @resource_listing.models.map(&:properties_model_names).flatten.uniq
     end
   end
 end
