@@ -4,7 +4,7 @@ describe SwaggerYard, '.generate' do
   let(:app_path) {'../../fixtures/dummy/app/'}
 
   context "for a valid controller" do
-    let(:model_path) {File.expand_path(app_path+'models/pet.rb', __FILE__)}
+    let(:model_path) {File.expand_path(app_path+'models/*.rb', __FILE__)}
     let(:controller_path) {File.expand_path(app_path+'controllers/*.rb', __FILE__)}
 
     let(:resource_listing) {SwaggerYard::ResourceListing.new(controller_path, model_path)}

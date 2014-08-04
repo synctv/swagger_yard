@@ -135,13 +135,31 @@
     }
   ],
   "models":{
+    "AnimalThing":{
+      "id":"AnimalThing",
+      "properties": {
+        "id":{"type":"integer", "description":"the identifier for the animal thing"},
+        "type":{"type":"string", "description":"the type of animal"}
+      },
+      "required":["id"]
+    },
     "Pet":{
       "id":"Pet",
       "properties":{
-        "id":{"type":"integer"},
-        "name":{"type":"string"},
-        "age":{"type":"integer"}
-      }
+        "id":{"type":"integer","description":"the identifier for the pet"},
+        "name":{
+          "type":"array",
+          "items": {"type":"string"},
+          "description":"the names for the pet"
+        },
+        "age":{"type":"integer","description":"the age of the pet"},
+        "relatives": {
+          "type":"array",
+          "items":{"$ref":"AnimalThing"},
+          "description":"other Pets in its family"
+        }
+      },
+      "required":["id","relatives"]
     }
   },
   "authorizations":{
