@@ -1,49 +1,48 @@
 module SwaggerYard
   class Parameter
-    attr_accessor :name, :data_type, :description
+    attr_accessor :name, :description
     attr_reader :param_type, :required, :allow_multiple, :allowable_values
 
-    YARD_REGEX = /\A\[(\w*)\]\s*([\w\[\]]*)(\(.*\))?\s*(.*)\Z/
-
     def self.from_yard_tag(tag, operation)
+      description = tag.text
+      name, options_string = tag.name.split(/[\(\)]/)
+      type = Type.from_type_list(tag.types)
+
       options = {}
-      string = tag.text
 
-      data_type, name, options_string, description = string.match(YARD_REGEX).captures
-      options[:allow_multiple] = name.gsub!("[]", "") # name[] to match rails array behavior
-
-      if operation.ref?(data_type)
-        operation.model_names << data_type
-      else
-        data_type.downcase!
-      end
+      operation.model_names << type.name if type.ref?
 
       unless options_string.nil?
-        options_string[1..-2].split(',').map(&:strip).tap do |arr|
+        options_string.split(',').map(&:strip).tap do |arr|
           options[:required] = !arr.delete('required').nil?
+          options[:allow_multiple] = !arr.delete('multiple').nil?
           options[:param_type] = arr.last
         end
       end
 
-      new(name, data_type, description, options)
+      new(name, type, description, options)
     end
 
     # TODO: support more variation in scope types
     def self.from_path_param(name)
-      new(name, "string", "Scope response to #{name}", {
+      new(name, Type.new("string"), "Scope response to #{name}", {
         required: true,
         allow_multiple: false,
         param_type: "path"
       })
     end
 
-    def initialize(name, data_type, description, options={})
-      @name, @data_type, @description = name, data_type, description
+    def initialize(name, type, description, options={})
+      @name, @type, @description = name, type, description
 
       @required = options[:required] || false
       @param_type = options[:param_type] || 'query'
       @allow_multiple = options[:allow_multiple] || false
       @allowable_values = options[:allowable_values] || []
+    end
+
+    def type
+      @type.name
     end
 
     def allowable_values_hash
@@ -60,11 +59,10 @@ module SwaggerYard
         "paramType"       => param_type,
         "name"            => name,
         "description"     => description,
-        "type"            => data_type,
         "required"        => required,
         "allowMultiple"   => allow_multiple.present?,
         "allowableValues" => allowable_values_hash 
-      }.reject {|k,v| v.nil?}
+      }.merge(@type.to_h).reject {|k,v| v.nil?}
     end
   end
 end

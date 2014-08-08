@@ -57,20 +57,32 @@ class Accounts::OwnershipsController < ActionController::Base
   #
   # @path [GET] /accounts/ownerships.{format_type}
   #
-  # @parameter          [Integer]   offset            Used for pagination of response data (default: 25 items per response). Specifies the offset of the next block of data to receive.
-  # @parameter          [Array]     status            Filter by status. (e.g. status[]=1&status[]=2&status[]=3).
+  # @parameter offset   [Integer]               Used for pagination of response data (default: 25 items per response). Specifies the offset of the next block of data to receive.
+  # @parameter status   [Array]                 Filter by status. (e.g. status[]=1&status[]=2&status[]=3).
   # @parameter_list     [String]    sort_order        Orders response by fields. (e.g. sort_order=created_at).
   #                     [List]      id
   #                     [List]      begin_at
   #                     [List]      end_at
   #                     [List]      created_at
-  # @parameter          [Boolean]   sort_descending   Reverse order of sort_order sorting, make it descending.
-  # @parameter          [Date]      begin_at_greater  Filters response to include only items with begin_at >= specified timestamp (e.g. begin_at_greater=2012-02-15T02:06:56Z).
-  # @parameter          [Date]      begin_at_less     Filters response to include only items with begin_at <= specified timestamp (e.g. begin_at_less=2012-02-15T02:06:56Z).
-  # @parameter          [Date]      end_at_greater    Filters response to include only items with end_at >= specified timestamp (e.g. end_at_greater=2012-02-15T02:06:56Z).
-  # @parameter          [Date]      end_at_less       Filters response to include only items with end_at <= specified timestamp (e.g. end_at_less=2012-02-15T02:06:56Z).
+  # @parameter sort_descending    [Boolean]     Reverse order of sort_order sorting, make it descending.
+  # @parameter begin_at_greater   [Date]        Filters response to include only items with begin_at >= specified timestamp (e.g. begin_at_greater=2012-02-15T02:06:56Z).
+  # @parameter begin_at_less      [Date]        Filters response to include only items with begin_at <= specified timestamp (e.g. begin_at_less=2012-02-15T02:06:56Z).
+  # @parameter end_at_greater     [Date]        Filters response to include only items with end_at >= specified timestamp (e.g. end_at_greater=2012-02-15T02:06:56Z).
+  # @parameter end_at_less        [Date]        Filters response to include only items with end_at <= specified timestamp (e.g. end_at_less=2012-02-15T02:06:56Z).
   #
   def index
+    ...
+  end
+
+  ##
+  # Returns an ownership for an account by id
+  # 
+  # @path /accounts/ownerships/{id}.{format_type}
+  # @response_type [Ownership]
+  # @error_message [EmptyOwnership] 404 Ownership not found
+  # @error_message 400 Invalid ID supplied
+  #
+  def show
     ...
   end
 end
@@ -82,10 +94,10 @@ end
 #
 # @model Pet
 #
-# @property id    [integer, required]   the identifier for the pet
-# @property name  [array, string]    the names for the pet
+# @property id(required)    [integer]   the identifier for the pet
+# @property name  [Array<string>]    the names for the pet
 # @property age   [integer]   the age of the pet
-# @property relatives [array, Pet, required] other Pets in its family
+# @property relatives(required) [Array<Pet>] other Pets in its family
 #
 class Pet
 end
@@ -139,11 +151,9 @@ See [rails engines overriding views](http://guides.rubyonrails.org/engines.html#
 
 Copying over JS requires that ActionDispatch::Static middleware be used (by default it should in use).
 
-
 ## Notes ##
 
 By default SwaggerYard will use a slightly modify version of the swagger-ui. Changes to the JS code are indicated with "SwaggerYard changes" comments. The changes are mainly to support Rails way of supporting an array of parameters.
-
 
 ## More Information ##
 

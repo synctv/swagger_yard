@@ -18,7 +18,7 @@ module SwaggerYard
           when "parameter_list"
             operation.add_parameter_list(tag)
           when "response_type"
-            operation.response_type = tag.text
+            operation.response_type = Type.from_type_list(tag.types)
           when "error_message"
             operation.add_error_message(tag)
           when "summary"
@@ -48,13 +48,15 @@ module SwaggerYard
       {
         "httpMethod"        => http_method,
         "nickname"          => nickname,
-        "type"              => response_type || "void",
+        "type"              => "void",
         "produces"          => ["application/json", "application/xml"],
         "parameters"        => parameters.map(&:to_h),
         "summary"           => summary || @api.description,
         "notes"             => notes,
         "responseMessages"  => error_messages
-      }
+      }.tap do |h|
+        h.merge!(response_type.to_h) if response_type
+      end
     end
 
     ##
@@ -89,7 +91,7 @@ module SwaggerYard
       data_type, name, required, description, list_string = parse_parameter_list(tag)
       allowable_values = parse_list_values(list_string)
 
-      @parameters << Parameter.new(name, data_type.downcase, description, {
+      @parameters << Parameter.new(name, Type.new(data_type.downcase), description, {
         required: required.present?,
         param_type: "query",
         allow_multiple: false,
@@ -131,7 +133,7 @@ module SwaggerYard
     end
 
     def format_parameter
-      Parameter.new("format_type", "string", "Response format either JSON or XML", {
+      Parameter.new("format_type", Type.new("string"), "Response format either JSON or XML", {
         required: true,
         param_type: "path",
         allow_multiple: false,

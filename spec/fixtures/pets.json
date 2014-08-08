@@ -11,7 +11,8 @@
         {
           "httpMethod":"GET",
           "nickname":"pets-format-type-get",
-          "type":"void",
+          "type":"array",
+          "items": {"$ref":"Pet"},
           "produces":["application/json", "application/xml"],
           "parameters":[
             {
@@ -147,7 +148,7 @@
       "id":"Pet",
       "properties":{
         "id":{"type":"integer","description":"the identifier for the pet"},
-        "name":{
+        "names":{
           "type":"array",
           "items": {"type":"string"},
           "description":"the names for the pet"

@@ -3,40 +3,33 @@ module SwaggerYard
   # Holds the name and type for a single model property
   #
   class Property
-    attr_reader :name
+    attr_reader :name, :description
 
     def self.from_tag(tag)
-      new(tag.name, tag.types, tag.text)
+      name, options_string = tag.name.split(/[\(\)]/)
+
+      required = options_string.to_s.split(',').map(&:strip).include?('required')
+
+      new(name, tag.types, tag.text, required)
     end
 
-    def initialize(name, types, description)
-      @name, @types, @description = name, types, description
+    def initialize(name, types, description, required)
+      @name, @description, @required = name, description, required
+
+      @type = Type.from_type_list(types)
     end
 
-    def type
-      is_array? ? @types[1] : @types[0]
+    def required?
+      @required
     end
 
-    def is_array?
-      @types[0] == "array"
-    end
-
-    def is_required?
-      @types.size > 1 && @types.last == "required"
-    end
-
-    def is_ref?
-      /[[:upper:]]/.match(type[0])
+    def model_name
+      @type.model_name
     end
 
     def to_h
-      type_tag = is_ref? ? "$ref" : "type"
-      result = if is_array?
-        { "type" => "array", "items" => { type_tag => type } }
-      else
-        { type_tag => @types.first }
-      end
-      result["description"] = @description if @description
+      result = @type.to_h
+      result["description"] = description if description
       result
     end
   end

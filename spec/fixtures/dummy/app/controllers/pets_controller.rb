@@ -8,14 +8,15 @@
 class PetsController < ApplicationController
   # return a list of Pets
   # @path [GET] /pets.{format_type}
-  # @parameter [string] client_name(required) The name of the client using the API
+  # @response_type [Array<Pet>]
+  # @parameter client_name(required) [string] The name of the client using the API
   def index
   end
 
   # return a Pet
   # @path [GET] /pets/{id}.{format_type}
-  # @parameter [integer] id The ID for the Pet
-  # @response_type Pet
+  # @parameter id [integer] The ID for the Pet
+  # @response_type [Pet]
   # @error_message [EmptyPet] 404 Pet not found
   # @error_message 400 Invalid ID supplied
   def show
@@ -23,7 +24,7 @@ class PetsController < ApplicationController
 
   # create a Pet
   # @path [POST] /pets
-  # @parameter [Pet] pet(required, body) The pet object
+  # @parameter pet(required,body) [Pet] The pet object
   def create
   end
 
