@@ -55,7 +55,7 @@ module SwaggerYard
       ::YARD::Tags::Library.define_tag("Api resource", :resource)
       ::YARD::Tags::Library.define_tag("Resource path", :resource_path)
       ::YARD::Tags::Library.define_tag("Api path", :path, :with_types)
-      ::YARD::Tags::Library.define_tag("Parameter", :parameter)
+      ::YARD::Tags::Library.define_tag("Parameter", :parameter, :with_types_name_and_default)
       ::YARD::Tags::Library.define_tag("Parameter list", :parameter_list)
       ::YARD::Tags::Library.define_tag("Status code", :status_code)
       ::YARD::Tags::Library.define_tag("Implementation notes", :notes)
@@ -63,7 +63,7 @@ module SwaggerYard
       ::YARD::Tags::Library.define_tag("Error response message", :error_message, :with_types_and_name)
       ::YARD::Tags::Library.define_tag("Api Summary", :summary)
       ::YARD::Tags::Library.define_tag("Model resource", :model)
-      ::YARD::Tags::Library.define_tag("Model property", :property, :with_types_and_name)
+      ::YARD::Tags::Library.define_tag("Model property", :property, :with_types_name_and_default)
       ::YARD::Tags::Library.define_tag("Authorization", :authorization, :with_types_and_name)
       ::YARD::Tags::Library.define_tag("Authorization Use", :authorize_with)
     end

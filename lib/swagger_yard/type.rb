@@ -1,16 +1,14 @@
 module SwaggerYard
   class Type
     def self.from_type_list(types)
-      required = !types.delete("required").nil?
-
       parts = types.first.split(/[<>]/)
-      new(parts.last, parts.grep(/array/i).any?, required)
+      new(parts.last, parts.grep(/array/i).any?)
     end
 
-    attr_reader :name, :array, :required
+    attr_reader :name, :array
 
-    def initialize(name, array, required)
-      @name, @array, @required = name, array, required
+    def initialize(name, array=false)
+      @name, @array = name, array
     end
 
     # TODO: have this look at resource listing?
@@ -19,6 +17,5 @@ module SwaggerYard
     end
 
     alias :array? :array
-    alias :required? :required
   end
 end

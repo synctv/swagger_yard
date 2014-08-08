@@ -89,7 +89,7 @@ module SwaggerYard
       data_type, name, required, description, list_string = parse_parameter_list(tag)
       allowable_values = parse_list_values(list_string)
 
-      @parameters << Parameter.new(name, data_type.downcase, description, {
+      @parameters << Parameter.new(name, Type.new(data_type.downcase), description, {
         required: required.present?,
         param_type: "query",
         allow_multiple: false,
@@ -131,7 +131,7 @@ module SwaggerYard
     end
 
     def format_parameter
-      Parameter.new("format_type", "string", "Response format either JSON or XML", {
+      Parameter.new("format_type", Type.new("string"), "Response format either JSON or XML", {
         required: true,
         param_type: "path",
         allow_multiple: false,
