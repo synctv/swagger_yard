@@ -16,6 +16,19 @@ module SwaggerYard
       /[[:upper:]]/.match(name)
     end
 
+    def model_name
+      ref? ? name : nil
+    end
+
     alias :array? :array
+
+    def to_h
+      type_tag = ref? ? "$ref" : "type"
+      if array?
+        {"type"=>"array", "items"=> { type_tag => name }}
+      else
+        {"type"=>name}
+      end
+    end
   end
 end

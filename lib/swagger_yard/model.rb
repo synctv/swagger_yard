@@ -42,7 +42,7 @@ module SwaggerYard
     end
 
     def properties_model_names
-      @properties.select(&:ref?).map(&:type)
+      @properties.map(&:model_name).compact
     end
 
     def to_h

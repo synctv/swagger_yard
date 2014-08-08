@@ -10,13 +10,12 @@ module SwaggerYard
 
       options = {}
 
-      options[:allow_multiple] = type.array?
-
       operation.model_names << type.name if type.ref?
 
       unless options_string.nil?
         options_string.split(',').map(&:strip).tap do |arr|
           options[:required] = !arr.delete('required').nil?
+          options[:allow_multiple] = !arr.delete('multiple').nil?
           options[:param_type] = arr.last
         end
       end
@@ -60,11 +59,10 @@ module SwaggerYard
         "paramType"       => param_type,
         "name"            => name,
         "description"     => description,
-        "type"            => type,
         "required"        => required,
         "allowMultiple"   => allow_multiple.present?,
         "allowableValues" => allowable_values_hash 
-      }.reject {|k,v| v.nil?}
+      }.merge(@type.to_h).reject {|k,v| v.nil?}
     end
   end
 end

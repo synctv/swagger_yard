@@ -19,29 +19,16 @@ module SwaggerYard
       @type = Type.from_type_list(types)
     end
 
-    def array?
-      @type.array?
-    end
-
     def required?
       @required
     end
 
-    def ref?
-      @type.ref?
-    end
-
-    def type
-      @type.name
+    def model_name
+      @type.model_name
     end
 
     def to_h
-      type_tag = ref? ? "$ref" : "type" # as of v1.2 spec this is required behavior
-      result = if array?
-        { "type" => "array", "items" => { type_tag => type } }
-      else
-        { type_tag => type }
-      end
+      result = @type.to_h
       result["description"] = description if description
       result
     end
