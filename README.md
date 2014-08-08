@@ -42,6 +42,8 @@ Install the gem with Bunder:
 
 ### Here is an example of how to use SwaggerYard in your Controller ###
 
+**Note:** Model references should be Capitalized or CamelCased, basic types (integer, boolean, string, etc) should be lowercased everywhere.
+
 ```ruby
 # @resource Account ownership
 #
@@ -57,18 +59,18 @@ class Accounts::OwnershipsController < ActionController::Base
   #
   # @path [GET] /accounts/ownerships.{format_type}
   #
-  # @parameter offset   [Integer]               Used for pagination of response data (default: 25 items per response). Specifies the offset of the next block of data to receive.
-  # @parameter status   [Array]                 Filter by status. (e.g. status[]=1&status[]=2&status[]=3).
+  # @parameter offset   [integer]               Used for pagination of response data (default: 25 items per response). Specifies the offset of the next block of data to receive.
+  # @parameter status   [array<string>]                 Filter by status. (e.g. status[]=1&status[]=2&status[]=3).
   # @parameter_list     [String]    sort_order        Orders response by fields. (e.g. sort_order=created_at).
   #                     [List]      id
   #                     [List]      begin_at
   #                     [List]      end_at
   #                     [List]      created_at
-  # @parameter sort_descending    [Boolean]     Reverse order of sort_order sorting, make it descending.
-  # @parameter begin_at_greater   [Date]        Filters response to include only items with begin_at >= specified timestamp (e.g. begin_at_greater=2012-02-15T02:06:56Z).
-  # @parameter begin_at_less      [Date]        Filters response to include only items with begin_at <= specified timestamp (e.g. begin_at_less=2012-02-15T02:06:56Z).
-  # @parameter end_at_greater     [Date]        Filters response to include only items with end_at >= specified timestamp (e.g. end_at_greater=2012-02-15T02:06:56Z).
-  # @parameter end_at_less        [Date]        Filters response to include only items with end_at <= specified timestamp (e.g. end_at_less=2012-02-15T02:06:56Z).
+  # @parameter sort_descending    [boolean]     Reverse order of sort_order sorting, make it descending.
+  # @parameter begin_at_greater   [date]        Filters response to include only items with begin_at >= specified timestamp (e.g. begin_at_greater=2012-02-15T02:06:56Z).
+  # @parameter begin_at_less      [date]        Filters response to include only items with begin_at <= specified timestamp (e.g. begin_at_less=2012-02-15T02:06:56Z).
+  # @parameter end_at_greater     [date]        Filters response to include only items with end_at >= specified timestamp (e.g. end_at_greater=2012-02-15T02:06:56Z).
+  # @parameter end_at_less        [date]        Filters response to include only items with end_at <= specified timestamp (e.g. end_at_less=2012-02-15T02:06:56Z).
   #
   def index
     ...
