@@ -42,7 +42,7 @@ module SwaggerYard
     end
 
     def properties_model_names
-      @properties.select(&:is_ref?).map(&:type)
+      @properties.select(&:ref?).map(&:type)
     end
 
     def to_h
@@ -51,7 +51,7 @@ module SwaggerYard
       {
         "id" => id,
         "properties" => Hash[@properties.map {|property| [property.name, property.to_h]}],
-        "required" => @properties.select(&:is_required?).map(&:name)
+        "required" => @properties.select(&:required?).map(&:name)
       }
     end
   end

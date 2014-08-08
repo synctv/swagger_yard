@@ -147,7 +147,7 @@
       "id":"Pet",
       "properties":{
         "id":{"type":"integer","description":"the identifier for the pet"},
-        "name":{
+        "names":{
           "type":"array",
           "items": {"type":"string"},
           "description":"the names for the pet"
