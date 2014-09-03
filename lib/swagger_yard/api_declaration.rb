@@ -60,8 +60,7 @@ module SwaggerYard
     end
 
     def models
-      model_names = (model_names_from_apis + model_names_from_model_properties).uniq
-      @resource_listing.models.select {|m| model_names.include?(m.id)}
+      (api_models + property_models).uniq
     end
 
     def ref?(name)
@@ -92,8 +91,18 @@ module SwaggerYard
       apis.values.map(&:model_names).flatten.uniq
     end
 
+    # models selected by the names of models referenced in APIs
+    def api_models
+      @resource_listing.models.select {|m| model_names_from_apis.include?(m.id)}
+    end
+
     def model_names_from_model_properties
-      @resource_listing.models.map(&:properties_model_names).flatten.uniq
+      api_models.map(&:properties_model_names).flatten.uniq
+    end
+
+    # models selected by names used in properties in models used in APIs
+    def property_models
+      @resource_listing.models.select {|m| model_names_from_model_properties.include?(m.id)}
     end
   end
 end

@@ -1,7 +1,7 @@
 module SwaggerYard
   class Operation
-    attr_accessor :summary, :notes, :response_type
-    attr_reader :path, :http_method, :error_messages
+    attr_accessor :summary, :notes
+    attr_reader :path, :http_method, :error_messages, :response_type
     attr_reader :parameters, :model_names
 
     PARAMETER_LIST_REGEX = /\A\[(\w*)\]\s*(\w*)(\(required\))?\s*(.*)\n([.\s\S]*)\Z/
@@ -18,7 +18,7 @@ module SwaggerYard
           when "parameter_list"
             operation.add_parameter_list(tag)
           when "response_type"
-            operation.response_type = Type.from_type_list(tag.types)
+            operation.add_response_type(Type.from_type_list(tag.types))
           when "error_message"
             operation.add_error_message(tag)
           when "summary"
@@ -97,6 +97,11 @@ module SwaggerYard
         allow_multiple: false,
         allowable_values: allowable_values
       })
+    end
+
+    def add_response_type(type)
+      model_names << type.model_name
+      @response_type = type
     end
 
     def add_error_message(tag)

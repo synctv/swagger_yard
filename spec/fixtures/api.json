@@ -6,6 +6,10 @@
     {
       "path":"/pets",
       "description":"This document describes the API for interacting with Pet resources"
+    },
+    {
+      "path":"/transports",
+      "description":"This document describes the API for interacting with Transport resources"
     }
   ],
   "authorizations":{

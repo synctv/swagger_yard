@@ -20,9 +20,13 @@ describe SwaggerYard, '.generate' do
     it 'generates swagger json for an individual controller' do
       expect(resource_listing.declaration_for('/pets').to_h).to eq(JSON.parse(pets_json))
     end
+
+    let(:transports_json) {File.read(File.expand_path('../../fixtures/transports.json', __FILE__))}
+
+    it 'generates swagger json for a controller with a response_type model' do
+      expect(resource_listing.declaration_for('/transports').to_h).to eq(JSON.parse(transports_json))
+    end
   end
-
-
 
   context "for non-controllers (modules) in the path" do
     let(:controllers_path) {File.expand_path('../../fixtures/dummy/app/controllers/**/*.rb', __FILE__)}

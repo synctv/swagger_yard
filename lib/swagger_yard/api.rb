@@ -38,7 +38,7 @@ module SwaggerYard
     end
 
     def model_names
-      @operations.map(&:model_names).flatten.uniq
+      @operations.map(&:model_names).flatten.compact.uniq
       # @parameters.select {|p| ref?(p['type'])}.map {|p| p['type']}.uniq
     end
 
