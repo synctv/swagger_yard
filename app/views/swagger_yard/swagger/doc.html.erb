@@ -20,7 +20,7 @@
     <script type="text/javascript">
 	$(function () {
 	    window.swaggerUi = new SwaggerUi({
-                discoveryUrl: location.protocol + "//" + location.host + "/swagger/api",
+                discoveryUrl: location.protocol + "//" + location.host + "<%= Rails.configuration.relative_url_root %>" + "/swagger/api",
                 dom_id:"swagger-ui-container",
                 supportHeaderParams: true,
                 supportedSubmitMethods: ['get', 'post', 'put'],
