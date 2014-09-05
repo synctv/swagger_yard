@@ -10,7 +10,7 @@ module SwaggerYard
 
     def show
       swagger_api = SwaggerYard.get_api("/#{params[:resource]}")
-      swagger_api.merge!("basePath" => request.base_url + SwaggerYard.api_path) if swagger_api["basePath"].blank? 
+      swagger_api.merge!("basePath" => request.base_url + env["SCRIPT_NAME"] + "/api") if swagger_api["basePath"].blank? 
       render :json => swagger_api
     end
 
