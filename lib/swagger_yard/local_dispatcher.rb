@@ -10,7 +10,7 @@ module SwaggerYard
     end
 
     def server?
-      [:thin, :unicorn].include?(discovered_dispatcher)
+      [:webrick, :thin, :unicorn].include?(discovered_dispatcher)
     end
 
   private
