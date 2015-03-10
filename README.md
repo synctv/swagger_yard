@@ -137,7 +137,7 @@ end
 
 ## Seeing the Swagger JSON ##
 
-You should now be able to start your application and visit `http://local-dev.domain:port/swagger/docs` (if the engine is mounted at `/swagger` as above). You should see the output list each of the controllers you documented, and the paths to see their specific APIs.
+You should now be able to start your application and visit `http://local-dev.domain:port/swagger/doc` (if the engine is mounted at `/swagger` as above). You should see the output list each of the controllers you documented, and the paths to see their specific APIs.
 
 To see a specific controller visit `http://local-dev.domain:port/swagger/api/accounts/ownerships` as given in the `@resource_path` in the example above.
 
