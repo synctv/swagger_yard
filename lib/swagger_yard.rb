@@ -79,6 +79,10 @@ module SwaggerYard
       end
     end
 
+    def clear_cache
+      cache["listing_index"] = nil
+    end
+
   private
     ##
     # Register some custom yard tags used by swagger-ui
