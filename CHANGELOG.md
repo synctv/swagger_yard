@@ -1,4 +1,8 @@
-## SwaggerYard 0.0.6 ##
+## SwaggerYard 0.0.7 ##
+
+*   Allow deeply nested model objects
+
+    *Peter Doree*
 
 *   Adds support for Model and $ref
 *   Add doc update for using Model
