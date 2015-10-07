@@ -140,7 +140,12 @@
       "id":"AnimalThing",
       "properties": {
         "id":{"type":"integer", "description":"the identifier for the animal thing"},
-        "type":{"type":"string", "description":"the type of animal"}
+        "type":{"type":"string", "description":"the type of animal"},
+        "possessions": {
+          "type":"array",
+          "items":{"$ref":"Possession"},
+          "description":"animal's possessions"
+        }
       },
       "required":["id"]
     },
@@ -161,6 +166,14 @@
         }
       },
       "required":["id","relatives"]
+    },
+    "Possession":{
+      "id":"Possession",
+      "properties": {
+        "name":{"type":"string","description":"the name of the possession"},
+        "value":{"type":"float","description":"the value of the possession"}
+      },
+      "required":[]
     }
   },
   "authorizations":{
