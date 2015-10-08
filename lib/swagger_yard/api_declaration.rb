@@ -97,7 +97,7 @@ module SwaggerYard
     end
 
     def model_names_from_model_properties
-      api_models.map(&:properties_model_names).flatten.uniq
+      api_models.map{|model| model.recursive_properties_model_names(@resource_listing.models) }.flatten.uniq
     end
 
     # models selected by names used in properties in models used in APIs
